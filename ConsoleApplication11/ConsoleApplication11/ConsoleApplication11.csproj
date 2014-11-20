@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5AC78BD9-DD2C-4D60-8BD9-23ACD66121CC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConsoleApplication11</RootNamespace>
+    <AssemblyName>ConsoleApplication11</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="1排序\AdvancedSort.cs" />
+    <Compile Include="2查找\BinarySearchST.cs" />
+    <Compile Include="3图\BellmanFord.cs" />
+    <Compile Include="3图\Dijkstra.cs" />
+    <Compile Include="3图\Graph.cs" />
+    <Compile Include="3图\Prim.cs" />
+    <Compile Include="4字符串\子字符串操作\BoyerMoore.cs" />
+    <Compile Include="2查找\HashSet.cs" />
+    <Compile Include="4字符串\压缩\Huffman.cs" />
+    <Compile Include="4字符串\子字符串操作\KMP.cs" />
+    <Compile Include="4字符串\子字符串操作\NFA.cs" />
+    <Compile Include="1排序\PQ.cs" />
+    <Compile Include="4字符串\子字符串操作\Practice.cs" />
+    <Compile Include="4字符串\排序\Practice.cs" />
+    <Compile Include="4字符串\查找\Practice.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="2查找\RedBlackBinarySearchTree.cs" />
+    <Compile Include="0基础\SimpleDataStructure.cs" />
+    <Compile Include="1排序\SimpleSort.cs" />
+    <Compile Include="4字符串\排序\StringSort.cs" />
+    <Compile Include="4字符串\子字符串操作\SuffixArray.cs" />
+    <Compile Include="4字符串\查找\TrieST.cs" />
+    <Compile Include="4字符串\查找\TST.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
