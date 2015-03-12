@@ -62,7 +62,10 @@
     <Compile Include="4字符串\子字符串操作\Practice.cs" />
     <Compile Include="4字符串\排序\Practice.cs" />
     <Compile Include="4字符串\查找\Practice.cs" />
-    <Compile Include="FordFulkerson.cs" />
+    <Compile Include="5动态规划\DPBag.cs" />
+    <Compile Include="5动态规划\DPFastestWay.cs" />
+    <Compile Include="5动态规划\DPLCS.cs" />
+    <Compile Include="3图\FordFulkerson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="2查找\RedBlackBinarySearchTree.cs" />
@@ -76,9 +79,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="5动态规划\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
