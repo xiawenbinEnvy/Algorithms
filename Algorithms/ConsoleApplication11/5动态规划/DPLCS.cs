@@ -42,7 +42,7 @@ namespace Algorithms._5动态规划
             else //if (dp[i, j] == dp[i - 1, j - 1] + 1)
             {
                 Print(dp, i - 1, j - 1, X);
-                Console.WriteLine(X[i]);
+                Console.WriteLine(X[i - 1]);
             }
         }
     }
