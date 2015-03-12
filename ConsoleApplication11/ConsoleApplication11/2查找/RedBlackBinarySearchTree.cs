@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace ConsoleApplication11
 {
@@ -7,8 +8,9 @@ namespace ConsoleApplication11
     /// </summary>
     class RedBlackBinarySearchTree<Key, Value> where Key : IComparable
     {
+        public int N = 0;
         public Node root;
-
+        private ReaderWriterLockSlim Lock = new ReaderWriterLockSlim();
         public class Node
         {
             public bool isRed = false;
@@ -31,7 +33,15 @@ namespace ConsoleApplication11
 
         public Node Get(Key k)
         {
-            return Get(root, k);
+            Lock.EnterReadLock();
+            try
+            {
+                return Get(root, k);
+            }
+            finally 
+            {
+                Lock.ExitReadLock();
+            }
         }
         private Node Get(Node h, Key k)
         {
@@ -54,12 +64,24 @@ namespace ConsoleApplication11
 
         public void Put(Key k, Value v)
         {
-            root = Put(root, k, v);
-            root.isRed = false;
+            Lock.EnterWriteLock();
+            try
+            {
+                root = Put(root, k, v);
+                root.isRed = false;
+            }
+            finally
+            {
+                Lock.ExitWriteLock();
+            }
         }
         private Node Put(Node h, Key k, Value v)
         {
-            if (h == null) return new Node(k, v, true);
+            if (h == null)
+            {
+                N++;
+                return new Node(k, v, true);
+            }
 
             int i = h.k.CompareTo(k);
             if (i < 0)
