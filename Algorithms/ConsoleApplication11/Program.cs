@@ -1,5 +1,6 @@
 ﻿using System;
 using Algorithms._5动态规划;
+using Algorithms.hihoCoder在线题库练习解答;
 
 namespace ConsoleApplication11
 {
@@ -7,8 +8,7 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-            new DPLCS().Process();
-            Console.ReadLine();
+            StringClearup.Start();
         }
     }
 }

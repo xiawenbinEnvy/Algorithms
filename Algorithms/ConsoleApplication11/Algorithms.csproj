@@ -66,6 +66,7 @@
     <Compile Include="5动态规划\DPFastestWay.cs" />
     <Compile Include="5动态规划\DPLCS.cs" />
     <Compile Include="3图\FordFulkerson.cs" />
+    <Compile Include="hihoCoder在线题库练习解答\StringClearup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="2查找\RedBlackBinarySearchTree.cs" />
@@ -75,9 +76,6 @@
     <Compile Include="4字符串\子字符串操作\SuffixArray.cs" />
     <Compile Include="4字符串\查找\TrieST.cs" />
     <Compile Include="4字符串\查找\TST.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
