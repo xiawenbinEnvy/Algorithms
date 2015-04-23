@@ -67,6 +67,7 @@
     <Compile Include="5动态规划\DPLCS.cs" />
     <Compile Include="3图\FordFulkerson.cs" />
     <Compile Include="hihoCoder在线题库练习解答\AddMissingDay.cs" />
+    <Compile Include="hihoCoder在线题库练习解答\Marshtomp.cs" />
     <Compile Include="hihoCoder在线题库练习解答\StringClearup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
