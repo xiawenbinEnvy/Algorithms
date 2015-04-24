@@ -9,7 +9,7 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-            Marshtomp.Start();
+            LostInTheCity.Start();
         }
     }
 }
