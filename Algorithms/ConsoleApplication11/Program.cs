@@ -10,8 +10,8 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-			NMRange range = new NMRange (new int[]{ 1, 2, 3, 4, 5 }, 3);
-			range.Range ();
+            SaoLeiLevel1 saolei = new SaoLeiLevel1();
+            saolei.Start();
 
 			Console.ReadLine ();
         }

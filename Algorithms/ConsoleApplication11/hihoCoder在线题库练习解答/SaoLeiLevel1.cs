@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Algorithms.hihoCoder在线题库练习解答
 {
@@ -32,70 +31,136 @@ namespace Algorithms.hihoCoder在线题库练习解答
      2 1 3
      7 1 3 5 6 7 9 10 
      3 2 4 8 
+      
+     1 1 1 1 2 2 2 1
+     6
+     3
      */
     class SaoLeiLevel1
     {
         /// <summary>
+        /// 未知
+        /// </summary>
+        private const int Unknown = -1;
+        /// <summary>
+        /// 安全
+        /// </summary>
+        private const int Safe = 0;
+
+        /// <summary>
+        /// 开始
+        /// </summary>
+        public void Start()
+        {
+            Prepare();
+        }
+
+        /// <summary>
         /// 从Console获取输入
         /// </summary>
-        private static void Prepare()
+        private void Prepare()
         {
             int groupCount = int.Parse(Console.ReadLine());
+
             for (int i = 0; i < groupCount; i++)
             {
                 int count = int.Parse(Console.ReadLine());
                 int[,] map = new int[2, count];
                 string number = Console.ReadLine();
                 string[] numbers = number.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                for (int j = 0; j < count;j++ )
+                for (int j = 0; j < count; j++)
                 {
-                    map[0, j] = -1;//-1表示未知
+                    map[0, j] = Unknown;//-1表示未知
                     map[1, j] = int.Parse(numbers[j]);
+                }
+
+                var result = Recognition(map, count);
+                if (result != null)
+                {
+                    Console.WriteLine(result.Item1.Count() + " " + string.Join(" ", result.Item1));
+                    Console.WriteLine(result.Item2.Count() + " " + string.Join(" ", result.Item2));
+                }
+                else
+                {
+                    Console.WriteLine("0");
+                    Console.WriteLine("0");
                 }
             }
         }
 
-        private static bool Recognition(int[,] map, int index,int length)
-        {
-            if (index == length) return true;
-            int actual = 0;
-            if (index == 0)
-            {
-                actual = map[0, index] + map[0, index + 1];
-            }
-            else if (index == length - 1)
-            {
-                actual = map[0, index - 1] + map[0, index];
-            }
-            else
-            {
-                actual = map[0, index - 1] + map[0, index] + map[0, index + 1];
-            }
-            if (actual > map[1, index])
-            {
-                return false;
-            }
-            int canSet = map[1, index] - actual;
-            if (canSet > 0)
-            {
-                //copy，设置猜测
-                return Recognition(map, index + 1, length);
-            }
-        }
-
-        private static int[,] Copy(int[,] map, int index, int length)
+        private int[,] Copy(int[,] map, int length)
         {
             int[,] mapCopy = new int[2, length];
             for (int i = 0; i < length; i++)
             {
-                if (i == index)
-                    mapCopy[0, i] = 1;
-                else
-                    mapCopy[0, i] = map[0, i];
-
+                mapCopy[0, i] = map[0, i];
                 mapCopy[1, i] = map[1, i];
             }
             return mapCopy;
+        }
+
+        private void For(int length, List<int[,]> maps, List<int> dileiPosition, List<int> notDileiPosition)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                if (maps.All(map => map[0, i] > Safe)) dileiPosition.Add(i + 1);
+                else if (maps.All(map => map[0, i] == Safe)) notDileiPosition.Add(i + 1);
+            }
+        }
+
+        private Tuple<int[], int[]> Recognition(int[,] map, int length)
+        {
+            if (length == 1)//特殊情况
+            {
+                if (map[1, 0] > 0) return Tuple.Create(new int[] { 1 }, new int[] { });
+                else return Tuple.Create(new int[] { }, new int[] { 1 });
+            }
+
+            int init = map[1, 0] == 0 ? 0 : 1;
+            var mapCopy1 = Copy(map, length);
+            //分两种情况，分别迭代一遍，取结果交集
+            mapCopy1[0, 0] = init;
+            mapCopy1[0, 1] = mapCopy1[1, 0] - mapCopy1[0, 0];
+            bool result1 = Solve(mapCopy1, length);
+
+            var mapCopy2 = Copy(map, length);
+            mapCopy2[0, 1] = init;
+            mapCopy2[0, 0] = mapCopy2[1, 0] - mapCopy2[0, 1];
+            bool result2 = Solve(mapCopy2, length);
+
+            List<int> dileiPosition = new List<int>();
+            List<int> notDileiPosition = new List<int>();
+
+            if (result1 && result2)
+            {
+                For(length, new List<int[,]>() { mapCopy1, mapCopy2 }, dileiPosition, notDileiPosition);
+            }
+            else if (result1)
+            {
+                For(length, new List<int[,]>() { mapCopy1 }, dileiPosition, notDileiPosition);
+            }
+            else if (result2)
+            {
+                For(length, new List<int[,]>() { mapCopy2 }, dileiPosition, notDileiPosition);
+            }
+
+            if (dileiPosition.Count > 0 || notDileiPosition.Count > 0)
+                return Tuple.Create(dileiPosition.ToArray(), notDileiPosition.ToArray());
+            return null;
+        }
+
+        private bool Solve(int[,] map, int length)
+        {
+            for (int i = 1; i < length - 1; i++)
+            {
+                int next = map[1, i] - map[0, i - 1] - map[0, i];
+                if (next < 0 || next > 1) return false;
+                map[0, i + 1] = next;
+            }
+            int last = map[1, length - 1] - map[0, length - 2];
+            if (last != map[0, length - 1]) return false;
+
+            return true;
         }
     }
 }
