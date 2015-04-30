@@ -68,6 +68,7 @@
     <Compile Include="hihoCoder在线题库练习解答\LostInTheCity.cs" />
     <Compile Include="hihoCoder在线题库练习解答\Marshtomp.cs" />
     <Compile Include="hihoCoder在线题库练习解答\SaoLeiLevel1.cs" />
+    <Compile Include="hihoCoder在线题库练习解答\SaoLeiLevel2.cs" />
     <Compile Include="hihoCoder在线题库练习解答\StringClearup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,7 +90,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="6排列组合\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
