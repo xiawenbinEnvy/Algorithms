@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Algorithms.hihoCoder在线题库练习解答
 {
@@ -52,10 +51,6 @@ namespace Algorithms.hihoCoder在线题库练习解答
      */
     class SaoLeiLevel2
     {
-        private const int Unknown = -1;
-        private const int NotDiLei = -100;
-        private const int DiLei = -999;
-
         public void Start() 
         {
             Prepare();
@@ -70,30 +65,32 @@ namespace Algorithms.hihoCoder在线题库练习解答
             for (int i = 0; i < groupCount; i++)
             {
                 string row_column = Console.ReadLine();
-                int row = int.Parse(row_column.Split(' ')[0]);
-                int column = int.Parse(row_column.Split(' ')[1]);
+                int row = int.Parse(row_column.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0]);
+                int column = int.Parse(row_column.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1]);
 
                 int[,] data = new int[row, column];
+                int[,] tmp = new int[row, column];
                 for (int j = 0; j < row; j++)
                 {
                     string rowdata = Console.ReadLine();
-                    string[] rowdatas = rowdata.Split(' ');
+                    string[] rowdatas = rowdata.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                     for (int k = 0; k < column; k++)
                     {
                         data[j, k] = int.Parse(rowdatas[k]);
+                        tmp[j, k] = -1;
                     }
                 }
-                Solve(data);
+                Solve(data, tmp);
 
                 int dileiCnt = 0;
                 int notdileiCnt = 0;
-                for (int l = 0; l < data.GetLength(0); l++)
+                for (int l = 0; l < row; l++)
                 {
-                    for (int m = 0; m < data.GetLength(1); m++)
+                    for (int m = 0; m < column; m++)
                     {
-                        if (data[l, m] == DiLei) dileiCnt++;
-                        else if (data[l, m] == NotDiLei) notdileiCnt++;
+                        if (tmp[l, m] == 1) dileiCnt++;
+                        else if (tmp[l, m] == 0) notdileiCnt++;
                     }
                 }
 
@@ -104,7 +101,7 @@ namespace Algorithms.hihoCoder在线题库练习解答
         /// <summary>
         /// 主方法
         /// </summary>
-        private void Solve(int[,] data)
+        private void Solve(int[,] data, int[,] tmp)
         {
             int row = data.GetLength(0);
             int column = data.GetLength(1);
@@ -113,154 +110,150 @@ namespace Algorithms.hihoCoder在线题库练习解答
             {
                 for (int j = 0; j < column; j++)
                 {
-                    if (data[i, j] == Unknown)
-                    {
-                        continue;
-                    }
-
                     if (data[i, j] == 0)//运用规则一
                     {
-                        SetUnknownRule1_2(data, i, j, NotDiLei);
+                        find1(data, tmp, i, j);
                     }
-                    else if (data[i, j] > 0)//运用规则二
+                    if (data[i, j] > 0)//运用规则二
                     {
-                        int unknownCnt = AroundUnknown(data, i, j).Count;
-                        if (unknownCnt == data[i, j])
-                        {
-                            SetUnknownRule1_2(data, i, j, DiLei);
-                        }
-                        else//运用规则三
-                        {
-                            SetUnknownRule3(data, i, j);
-                        }
+                        find2(data, tmp, i, j);
+                        find3(data, tmp, i, j);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// 规则一、二
-        /// </summary>
-        private void SetUnknownRule1_2(int[,] map, int i, int j, int value)
+        private void find1(int[,] a, int[,] b, int indexi, int indexj)
         {
-            for (int ii = -1; ii <= 1; ii++)//-1~1的范围意思是左右、上下各有一个空间
+            int i, j;
+            for (i = -1; i <= 1; i++)
             {
-                for (int jj = -1; jj <= 1; jj++)
+                if (((indexi + i) < 0) || ((indexi + i) >= a.GetLength(0)))
+                    continue;
+                for (j = -1; j <= 1; j++)
                 {
-                    if (ii == 0 && jj == 0) continue;
-
-                    int _i = i + ii;
-                    int _j = j + jj;
-
-                    if (_i >= 0 && _i < map.GetLength(0) && _j >= 0 && _j < map.GetLength(1) && map[_i, _j] == Unknown)
+                    if (((indexj + j) < 0) || ((indexj + j) >= a.GetLength(1)) || (i == 0 && j == 0))
+                        continue;
+                    if (a[indexi + i, indexj + j] == -1)
                     {
-                        map[_i, _j] = value;
+                        b[indexi + i, indexj + j] = 0;
+                        //Console.WriteLine("find1 " + (indexi + i) + " " + (indexj + j));
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// 获取周围8个格子内所有未探明的格子的坐标
-        /// </summary>
-        private List<Tuple<int, int>> AroundUnknown(int[,] map, int i, int j)
+        private void find2(int[,] a, int[,] b, int indexi, int indexj)
         {
-            List<Tuple<int, int>> result = new List<Tuple<int, int>>();
-            for (int ii = -1; ii <= 1; ii++)
-            {
-                for (int jj = -1; jj <= 1; jj++)
-                {
-                    if (ii == 0 && jj == 0) continue;
-
-                    int _i = i + ii;
-                    int _j = j + jj;
-
-                    if (_i >= 0 && _i < map.GetLength(0) && _j >= 0 && _j < map.GetLength(1) && map[_i, _j] == Unknown)
-                    {
-                        result.Add(Tuple.Create(_i, _j));
-                    }
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 获取能有交集的范围内的格子内所有标记地雷数大于0的格子的坐标
-        /// </summary>
-        private List<Tuple<int, int>> AroundHasDiLei(int[,] map, int i, int j)
-        {
-            List<Tuple<int, int>> result = new List<Tuple<int, int>>();
-            for (int ii = -2; ii <= 2; ii++)//上下左右差2，才会有包含关系
-            {
-                for (int jj = -2; jj <= 2; jj++)
-                {
-                    if (ii == 0 && jj == 0) continue;
-
-                    int _i = i + ii;
-                    int _j = j + jj;
-
-                    if (_i >= 0 && _i < map.GetLength(0) && _j >= 0 && _j < map.GetLength(1) && map[_i, _j] > 0)
-                    {
-                        result.Add(Tuple.Create(_i, _j));
-                    }
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 规则三
-        /// </summary>
-        private void SetUnknownRule3(int[,] map, int i, int j)
-        {
-            var thisAroundUnknown = AroundUnknown(map, i, j);//S_A
-            if (thisAroundUnknown.Count == 0) return;
-
-            var aroundHasDiLei = AroundHasDiLei(map, i, j);//先找到周围2个单元格范围内，地雷数大于0的格子的坐标
-            foreach (var position in aroundHasDiLei)
-            {
-                if (map[i, j] <= map[position.Item1, position.Item2]) continue;
-
-                var otherAroundUnknown = AroundUnknown(map, position.Item1, position.Item2);//S_B
-                if (thisAroundUnknown.Count <= otherAroundUnknown.Count) continue;
-
-                var contains = GetContain(thisAroundUnknown, otherAroundUnknown);
-                if (contains == null || contains.Count == 0) continue;
-                if (contains.Count == map[i, j] - map[position.Item1, position.Item2])
-                {
-                    foreach (var t in contains)
-                    {
-                        SetUnknownRule1_2(map, t.Item1, t.Item2, DiLei);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 判断两个集合的交集关系，并且返回非公共的元素
-        /// </summary>
-        private List<Tuple<int, int>> GetContain(List<Tuple<int, int>> _this, List<Tuple<int, int>> _other)
-        {
-            List<Tuple<int, int>> contains = new List<Tuple<int, int>>();
+            int i, j;
             int count = 0;
-            foreach (var a in _this)
+            count = AroundUnknown(a, indexi, indexj);
+            if (count == a[indexi, indexj])
             {
-                bool found = false;
-                foreach (var b in _other)
+                for (i = -1; i <= 1; i++)
                 {
-                    if (a == b)
+                    if (((indexi + i) < 0) || ((indexi + i) >= a.GetLength(0)))
+                        continue;
+                    for (j = -1; j <= 1; j++)
                     {
-                        found = true;
-                        count++;
-                        break;
+                        if (((indexj + j) < 0) || ((indexj + j) >= a.GetLength(1)) || (i == 0 && j == 0))
+                            continue;
+                        if (a[indexi + i, indexj + j] == -1)
+                        {
+                            b[indexi + i, indexj + j] = 1;
+                            //Console.WriteLine("find2 " + (indexi + i) + " " + (indexj + j));
+                        }
                     }
                 }
-                if (!found)
-                    contains.Add(a);//就是多出来的那个
             }
+        }
 
-            if (count != _other.Count) contains = null;//不是交集关系
-            return contains;
+        private int AroundUnknown(int[,] map, int indexi, int indexj)
+        {
+            int i, j;
+            int count = 0;
+            for (i = -1; i <= 1; i++)
+            {
+                if (((indexi + i) < 0) || ((indexi + i) >= map.GetLength(0)))
+                    continue;
+                for (j = -1; j <= 1; j++)
+                {
+                    if (((indexj + j) < 0) || ((indexj + j) >= map.GetLength(1)) || (i == 0 && j == 0))
+                        continue;
+                    if (map[indexi + i, indexj + j] == -1)
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        private void find3(int[,] map, int[,] b, int indexi, int indexj)
+        {
+            int i, j;
+            int i2, j2;
+            int diff;
+            for (i = -2; i <= 2; i++)
+            {
+                if (((indexi + i) < 0) || ((indexi + i) >= map.GetLength(0)))
+                    continue;
+                for (j = -2; j <= 2; j++)
+                {
+                    if (((indexj + j) < 0) || ((indexj + j) >= map.GetLength(1)) || (i == 0 && j == 0))
+                        continue;
+                    if (map[indexi + i, indexj + j] >= 0 && isIn(map, indexi + i, indexj + j, indexi, indexj))
+                    {
+                        diff = AroundUnknown(map, indexi, indexj) - AroundUnknown(map, indexi + i, indexj + j);
+                        if (diff == map[indexi, indexj] - map[indexi + i, indexj + j])
+                        {
+                            for (i2 = -1; i2 <= 1; i2++)
+                            {
+                                if (((indexi + i2) < 0) || ((indexi + i2) >= map.GetLength(0)))
+                                    continue;
+                                for (j2 = -1; j2 <= 1; j2++)
+                                {
+                                    if (((indexj + j2) < 0) || ((indexj + j2) >= map.GetLength(1)) || (i2 == 0 && j2 == 0))
+                                        continue;
+                                    if ((map[indexi + i2, indexj + j2] == -1) && (!isAdjacent(indexi + i2, indexj + j2, indexi + i, indexj + j)))
+                                    {
+                                        b[indexi + i2, indexj + j2] = 1;
+                                        Console.WriteLine("find3 " + (indexi + i2) + " " + (indexj + j2));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //判断两点距离,相邻返回1
+        private bool isAdjacent(int i1, int j1, int i2, int j2)
+        {
+            if ((i1 - i2) > 1 || (i1 - i2) < -1 || (j1 - j2) > 1 || (j1 - j2) < -1)
+                return false;
+            else
+                return true;
+        }
+
+        //判断点1周围的未知集合是否被点2周围的包含
+        private bool isIn(int[,] a, int i1, int j1, int i2, int j2)
+        {
+            int i, j;
+            for (i = -1; i <= 1; i++)
+            {
+                if (((i1 + i) < 0) || ((i1 + i) >= a.GetLength(0)))
+                    continue;
+                for (j = -1; j <= 1; j++)
+                {
+                    if (((j1 + j) < 0) || ((j1 + j) >= a.GetLength(1)) || (i == 0 && j == 0))
+                        continue;
+                    if (a[i1 + i, j1 + j] == -1 && (!isAdjacent(i1 + i, j1 + j, i2, j2)))
+                        return false;
+                }
+            }
+            return true;
         }
     }
 }
