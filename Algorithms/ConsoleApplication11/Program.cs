@@ -10,7 +10,7 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-            SaoLeiLevel2 saolei = new SaoLeiLevel2();
+            SaoLeiLevel3 saolei = new SaoLeiLevel3();
             saolei.Start();
 
 			Console.ReadLine ();

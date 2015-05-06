@@ -218,7 +218,7 @@ namespace Algorithms.hihoCoder在线题库练习解答
                                     if ((map[indexi + i2, indexj + j2] == -1) && (!isAdjacent(indexi + i2, indexj + j2, indexi + i, indexj + j)))
                                     {
                                         b[indexi + i2, indexj + j2] = 1;
-                                        Console.WriteLine("find3 " + (indexi + i2) + " " + (indexj + j2));
+                                        //Console.WriteLine("find3 " + (indexi + i2) + " " + (indexj + j2));
                                     }
                                 }
                             }
