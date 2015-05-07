@@ -10,8 +10,8 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-            SaoLeiLevel3 saolei = new SaoLeiLevel3();
-            saolei.Start();
+            PartiteGraphLevel1 grahp = new PartiteGraphLevel1();
+            grahp.Start();
 
 			Console.ReadLine ();
         }

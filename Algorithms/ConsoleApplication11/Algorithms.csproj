@@ -67,6 +67,7 @@
     <Compile Include="hihoCoder在线题库练习解答\AddMissingDay.cs" />
     <Compile Include="hihoCoder在线题库练习解答\LostInTheCity.cs" />
     <Compile Include="hihoCoder在线题库练习解答\Marshtomp.cs" />
+    <Compile Include="hihoCoder在线题库练习解答\PartiteGraphLevel1.cs" />
     <Compile Include="hihoCoder在线题库练习解答\SaoLeiLevel1.cs" />
     <Compile Include="hihoCoder在线题库练习解答\SaoLeiLevel2.cs" />
     <Compile Include="hihoCoder在线题库练习解答\SaoLeiLevel3.cs" />
