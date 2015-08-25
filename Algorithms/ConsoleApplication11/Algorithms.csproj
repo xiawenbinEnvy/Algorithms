@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="1排序\AdvancedSort.cs" />
     <Compile Include="2查找\BinarySearchST.cs" />
+    <Compile Include="2查找\SkipList.cs" />
     <Compile Include="3图\BellmanFord.cs" />
     <Compile Include="3图\Dijkstra.cs" />
     <Compile Include="3图\Graph.cs" />
